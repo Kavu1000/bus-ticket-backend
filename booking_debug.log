@@ -1,0 +1,16 @@
+{"timestamp":"2025-12-02T08:21:47.421Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"status":"completed"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-02T08:21:56.222Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"paymentStatus":"refunded"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-02T08:21:58.419Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"paymentStatus":"pending"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-02T08:22:05.122Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"status":"booked"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-02T08:22:17.101Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"status":"cancelled"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-02T08:22:32.322Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"paymentStatus":"completed"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-02T08:22:34.776Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"status":"completed"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-02T08:23:01.930Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"paymentStatus":"pending"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-02T08:23:11.131Z","method":"updateBooking","params":{"id":"692e9395fad1bd9d1adf6204"},"body":{"status":"booked"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-04T02:59:37.767Z","method":"updateBooking","params":{"id":"6930f8af6d189699c2084376"},"body":{"status":"cancelled"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-04T02:59:51.307Z","method":"updateBooking","params":{"id":"6930f8af6d189699c2084376"},"body":{"status":"booked"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-04T02:59:54.630Z","method":"updateBooking","params":{"id":"6930f8af6d189699c2084376"},"body":{"status":"completed"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-04T03:07:28.953Z","method":"updateBooking","params":{"id":"6930726e6d189699c2084334"},"body":{"paymentStatus":"pending"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2025-12-04T09:58:44.395Z","method":"updateBooking","params":{"id":"69315a124fb2af6baf0c131b"},"body":{"paymentStatus":"pending"},"user":{"id":"692da8c5bb874c0ce38c7558","role":"admin"}}
+{"timestamp":"2026-01-15T02:38:51.666Z","method":"updateBooking","params":{"id":"69684e2b1374290a831175ad"},"body":{"status":"completed"},"user":{"id":"69685102b0299c501bc2e6a0","role":"admin"}}
+{"timestamp":"2026-01-15T02:38:54.256Z","method":"updateBooking","params":{"id":"69634010765d0fa00c669189"},"body":{"status":"completed"},"user":{"id":"69685102b0299c501bc2e6a0","role":"admin"}}

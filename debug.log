@@ -1,0 +1,12 @@
+Registering auth routes...
+Mounting auth routes at /api/auth
+(node:18272) [MONGOOSE] Warning: Duplicate schema index on {"ticketId":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18272) [MONGOOSE] Warning: Duplicate schema index on {"qrData":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(node:18272) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+(node:18272) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+Server running in development mode on port 7002
+MongoDB Connected: ac-7pb8vow-shard-00-00.j2glufw.mongodb.net
+POST /api/auth/register
+Auth route hit: POST /register
+Register route handler hit
