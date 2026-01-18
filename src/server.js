@@ -23,12 +23,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Request logging middleware (development)
-if (process.env.NODE_ENV === 'development') {
-    app.use((req, res, next) => {
-        console.log(`${req.method} ${req.path}`);
-        next();
-    });
-}
+// if (process.env.NODE_ENV === 'development') {
+//     app.use((req, res, next) => {
+//         console.log(`${req.method} ${req.path}`);
+//         next();
+//     });
+// }
 
 // Health check route
 app.get('/health', (req, res) => {
@@ -80,7 +80,7 @@ const startServer = async () => {
 
         const PORT = process.env.PORT || 7001;
         app.listen(PORT, () => {
-            console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+            console.log(`Server running on port ${PORT}`);
         });
     } catch (error) {
         console.error('Failed to start server:', error);
