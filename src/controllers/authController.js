@@ -54,8 +54,7 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        // console.log('Login attempt:', { email, passwordProvided: !!password });
-        require('fs').appendFileSync('login_debug.log', JSON.stringify({ timestamp: new Date(), email, passwordProvided: !!password }) + '\n');
+        console.log('Login attempt:', { email, passwordProvided: !!password });
 
         // Check for user email
         const user = await User.findOne({ email }).select('+password');
