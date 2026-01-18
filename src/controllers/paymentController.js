@@ -17,7 +17,7 @@ const createPaymentLink = async (req, res, next) => {
         const orderNo = `BOOKING_${Date.now()}`;
 
         // Success callback URL - where user returns after payment
-        const successCallbackUrl = `${process.env.FRONTEND_URL || 'http://localhost:3001'}/booking-success?orderNo=${orderNo}`;
+        const successCallbackUrl = `${process.env.FRONTEND_URL || 'http://localhost:3001/netlify_deploy_easyBus'}/booking-success?orderNo=${orderNo}`;
 
         // Generate payment link
         const paymentData = await generatePaymentLink(

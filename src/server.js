@@ -73,6 +73,8 @@ const startServer = async () => {
         const PORT = process.env.PORT || 8000;
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
+            console.log(`Frontend URL: ${process.env.FRONTEND_URL}`);
+            console.log(`CWD: ${process.cwd()}`);
         });
     } catch (error) {
         console.error('Failed to start server:', error);
