@@ -13,6 +13,7 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const qrRoutes = require('./routes/qrRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const { startScheduler } = require('./services/scheduleUpdater');
 
 // Initialize express app
 const app = express();
@@ -75,6 +76,9 @@ const startServer = async () => {
             console.log(`Server running on port ${PORT}`);
             console.log(`Frontend URL: ${process.env.FRONTEND_URL}`);
             console.log(`CWD: ${process.cwd()}`);
+
+            // Start the schedule updater cron job
+            startScheduler();
         });
     } catch (error) {
         console.error('Failed to start server:', error);

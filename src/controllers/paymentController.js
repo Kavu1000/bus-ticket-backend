@@ -19,6 +19,7 @@ const createPaymentLink = async (req, res, next) => {
         // Success callback URL - where user returns after payment
         // Hardcoded to production URL to ensure it works without manual env var configuration
         const successCallbackUrl = `https://kavu1000.github.io/netlify_deploy_easyBus/#/booking-success?orderNo=${orderNo}`;
+        console.log('DEBUG: Generated Callback URL:', successCallbackUrl);
 
         // Generate payment link
         const paymentData = await generatePaymentLink(

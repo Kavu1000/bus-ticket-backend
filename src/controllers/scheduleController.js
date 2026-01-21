@@ -6,6 +6,7 @@ const Bus = require('../models/Bus');
 // @access  Private/Admin
 const createSchedule = async (req, res, next) => {
     try {
+        console.log('Create Schedule Request Body:', req.body); // Debug log
         const { busId } = req.body;
 
         // Validate busId is provided
@@ -160,10 +161,74 @@ const deleteSchedule = async (req, res, next) => {
     }
 };
 
+// @desc    Update expired schedules and create new ones
+// @route   POST /api/schedules/update-expired
+// @access  Private/Admin
+const updateExpiredSchedules = async (req, res, next) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Find all active schedules with past dates
+        const expiredSchedules = await Schedule.find({
+            date: { $lt: today },
+            status: 'active'
+        });
+
+        if (expiredSchedules.length === 0) {
+            return res.status(200).json({
+                success: true,
+                message: 'No expired schedules found',
+                data: { updated: 0, created: 0 }
+            });
+        }
+
+        let updatedCount = 0;
+        let createdCount = 0;
+
+        for (const schedule of expiredSchedules) {
+            // Mark as completed
+            await Schedule.findByIdAndUpdate(schedule._id, { status: 'completed' });
+            updatedCount++;
+
+            // Create new schedule for tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+
+            const newSchedule = new Schedule({
+                busId: schedule.busId,
+                route: schedule.route,
+                departureTime: schedule.departureTime,
+                arrivalTime: schedule.arrivalTime,
+                duration: schedule.duration,
+                date: tomorrow,
+                price: schedule.price,
+                pricePerSeat: schedule.pricePerSeat,
+                availableSeats: schedule.availableSeats,
+                status: 'active'
+            });
+
+            await newSchedule.save();
+            createdCount++;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Updated ${updatedCount} expired schedule(s) and created ${createdCount} new schedule(s)`,
+            data: { updated: updatedCount, created: createdCount }
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     createSchedule,
     getAllSchedules,
     getScheduleById,
     updateSchedule,
     deleteSchedule,
+    updateExpiredSchedules,
 };
+
