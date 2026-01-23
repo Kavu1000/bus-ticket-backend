@@ -7,11 +7,13 @@ const {
     updateSchedule,
     deleteSchedule,
     updateExpiredSchedules,
+    getCities,
 } = require('../controllers/scheduleController');
 const { protect, admin } = require('../middleware/auth');
 
 // Public routes
 router.get('/', getAllSchedules);
+router.get('/cities', getCities);
 
 // Admin routes - specific routes before :id
 router.post('/update-expired', protect, admin, updateExpiredSchedules);

@@ -161,6 +161,33 @@ const deleteSchedule = async (req, res, next) => {
     }
 };
 
+// @desc    Get unique cities from all schedules
+// @route   GET /api/schedules/cities
+// @access  Public
+const getCities = async (req, res, next) => {
+    try {
+        // Get all schedules
+        const schedules = await Schedule.find({ status: 'active' });
+
+        // Extract unique cities from both 'from' and 'to' fields
+        const citiesSet = new Set();
+        schedules.forEach(schedule => {
+            if (schedule.route.from) citiesSet.add(schedule.route.from);
+            if (schedule.route.to) citiesSet.add(schedule.route.to);
+        });
+
+        // Convert set to sorted array
+        const cities = Array.from(citiesSet).sort();
+
+        res.status(200).json({
+            success: true,
+            data: cities,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // @desc    Update expired schedules and create new ones
 // @route   POST /api/schedules/update-expired
 // @access  Private/Admin
@@ -230,5 +257,6 @@ module.exports = {
     updateSchedule,
     deleteSchedule,
     updateExpiredSchedules,
+    getCities,
 };
 
