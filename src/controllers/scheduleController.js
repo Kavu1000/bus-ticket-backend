@@ -188,7 +188,7 @@ const getCities = async (req, res, next) => {
     }
 };
 
-// @desc    Update expired schedules and create new ones
+// @desc    Auto-update expired schedule dates to tomorrow
 // @route   POST /api/schedules/update-expired
 // @access  Private/Admin
 const updateExpiredSchedules = async (req, res, next) => {
@@ -196,54 +196,47 @@ const updateExpiredSchedules = async (req, res, next) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        // Find all active schedules with past dates
+        // Find all schedules with past dates (keep them active, just update date)
         const expiredSchedules = await Schedule.find({
-            date: { $lt: today },
-            status: 'active'
-        });
+            date: { $lt: today }
+        }).populate('busId', 'capacity');
 
         if (expiredSchedules.length === 0) {
             return res.status(200).json({
                 success: true,
                 message: 'No expired schedules found',
-                data: { updated: 0, created: 0 }
+                data: { updated: 0 }
             });
         }
 
         let updatedCount = 0;
-        let createdCount = 0;
+
+        // Calculate tomorrow's date
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
 
         for (const schedule of expiredSchedules) {
-            // Mark as completed
-            await Schedule.findByIdAndUpdate(schedule._id, { status: 'completed' });
-            updatedCount++;
+            // Get the bus capacity to reset available seats
+            const busCapacity = schedule.busId?.capacity || schedule.availableSeats;
 
-            // Create new schedule for tomorrow
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(0, 0, 0, 0);
-
-            const newSchedule = new Schedule({
-                busId: schedule.busId,
-                route: schedule.route,
-                departureTime: schedule.departureTime,
-                arrivalTime: schedule.arrivalTime,
-                duration: schedule.duration,
+            // Update the same schedule: move date to tomorrow and reset seats
+            await Schedule.findByIdAndUpdate(schedule._id, {
                 date: tomorrow,
-                price: schedule.price,
-                pricePerSeat: schedule.pricePerSeat,
-                availableSeats: schedule.availableSeats,
-                status: 'active'
+                availableSeats: busCapacity, // Reset to full capacity
+                status: 'active' // Ensure it's active
             });
 
-            await newSchedule.save();
-            createdCount++;
+            updatedCount++;
         }
 
         res.status(200).json({
             success: true,
-            message: `Updated ${updatedCount} expired schedule(s) and created ${createdCount} new schedule(s)`,
-            data: { updated: updatedCount, created: createdCount }
+            message: `Auto-updated ${updatedCount} schedule(s) to ${tomorrow.toLocaleDateString()}`,
+            data: {
+                updated: updatedCount,
+                newDate: tomorrow.toISOString()
+            }
         });
     } catch (error) {
         next(error);
