@@ -13,12 +13,30 @@ const createPaymentLink = async (req, res, next) => {
             throw new Error('Booking IDs and amount are required');
         }
 
+        console.log('DEBUG HEADERS:', {
+            origin: req.headers.origin,
+            referer: req.headers.referer,
+            host: req.headers.host
+        });
+
         // Generate unique order number
         const orderNo = `BOOKING_${Date.now()}`;
 
         // Success callback URL - where user returns after payment
-        // Hardcoded to production URL to ensure it works without manual env var configuration
-        const successCallbackUrl = `https://kavu1000.github.io/netlify_deploy_easyBus/#/booking-success?orderNo=${orderNo}`;
+        // Dynamic based on request origin (localhost or production)
+        let clientUrl = req.headers.origin;
+        if (!clientUrl && req.headers.referer) {
+            // Extract origin from referer (e.g., http://localhost:5173/payment -> http://localhost:5173)
+            try {
+                const url = new URL(req.headers.referer);
+                clientUrl = url.origin;
+            } catch (e) {
+                console.log('Error parsing referer:', e);
+            }
+        }
+        clientUrl = clientUrl || 'https://kavu1000.github.io/netlify_deploy_easyBus';
+
+        const successCallbackUrl = `${clientUrl}/#/booking-success?orderNo=${orderNo}`;
         console.log('DEBUG: Generated Callback URL:', successCallbackUrl);
 
         // Generate payment link
