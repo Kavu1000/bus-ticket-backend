@@ -8,9 +8,12 @@ const User = require('../models/User');
 const createBooking = async (req, res, next) => {
     try {
         const { busId, seatNumber } = req.body;
+        console.log('Create Booking Request Body:', req.body); // Debug log
+        console.log('BusID received:', busId); // Debug log
 
         // Verify bus exists
         const bus = await Bus.findById(busId);
+        console.log('Bus found in DB:', bus); // Debug log
         if (!bus) {
             res.status(404);
             throw new Error('Bus not found');
